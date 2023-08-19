@@ -1,0 +1,512 @@
+swagger: '2.0'
+info:
+  title: Community Voice Core API
+  version: 1.0.0
+host: api.community-voice.local
+basePath: /v1
+schemes:
+  - http
+  - https
+paths:
+  /getAbout:
+    get:
+      tags:
+        - About
+      summary: Get App About
+      operationId: about
+      responses:
+        '200':
+          description: Successful operation !
+          examples:
+            application/json:
+              data:
+                about_message: eyJpdiI6Ik5COUV5Y1ltRTM4eXNsRlpLY2ptTGc9PSIsInZhbHVlIjoiNDFCbG95c1RHSHRFT0IyWWZ4aWFRQVJ6RHhTS1A4SFJiQXp2amlQc3RCUFRUWWs5R3RQQ0ZlakdFNnlvRm50MSIsIm1hYyI6ImM
+        '204':
+          description: No Content !
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /postRecordFile:
+    post:
+      tags:
+        - Editor
+      summary: Recorded File Upload
+      operationId: postRecordFile
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: api-token
+          in: header
+          required: true
+          type: string
+        - name: title
+          in: query
+          required: true
+          type: string
+        - name: note
+          in: query
+          required: false
+          type: string
+        - name: duration
+          in: query
+          description: Format millisecond
+          required: true
+          type: string
+        - name: recorded_file
+          in: formData
+          description: 'Audio Recorded file Upload ( max : 1GB )'
+          required: true
+          type: file
+        - name: image
+          in: formData
+          description: 'Audio Photo Upload (max : 2MB )'
+          required: false
+          type: file
+      responses:
+        '200':
+          description: Successful operation !
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /getUploadedRecord:
+    get:
+      tags:
+        - Editor
+      summary: Get Uploaded Records
+      operationId: getUploadedRecord
+      parameters:
+        - name: api-token
+          in: header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation !
+          examples:
+            application/json:
+              data:
+                - id: 2384c529-f0c4-445e-9f51-f5997b78e2e4
+                  title: Est earum eveniet ullam minima.
+                  duration: 2925000
+                  created_at: 'December 6 2019, 4:28 am'
+                  image: null
+                  audio: null
+                  note: Enim sunt est nemo quis voluptas et.
+                  station_title: ut
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /getAllProgrammes:
+    get:
+      tags:
+        - Programme
+      summary: Get All Programmes
+      operationId: getAllProgrammes
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              data:
+                - id: 2384c529-f0c4-445e-9f51-f5997b78e2e4
+                  title: Est earum eveniet ullam minima.
+                  duration: 2925000
+                  created_at: 'December 6 2019, 4:28 am'
+                  image: null
+                  audio: null
+                  note: Enim sunt est nemo quis voluptas et.
+                  station_title: ut
+              links:
+                first: /getAllProgrammes?page=1
+                last: /getAllProgrammes?page=1
+                prev: null
+                next: null
+              meta:
+                current_page: 1
+                from: 1
+                last_page: 1
+                path: /getAllProgrammes
+                per_page: 20
+                to: 1
+                total: 1
+        '204':
+          description: No Content !
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /getProgrammeDetail:
+    get:
+      tags:
+        - Programme
+      summary: Get Programme Detail
+      operationId: getProgrammeDetail
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              data:
+                id: 642f7671-86ee-476d-b266-4114562f94f8
+                title: GGGETETETE
+                duration: 10000
+                created_at: 11 hours ago
+                image: null
+                audio: null
+                description: Hello
+                station_title: ipsa
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /getAllStations:
+    get:
+      tags:
+        - Station
+      summary: Get All Stations
+      operationId: getAllStations
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              data:
+                - id: f1035694-ece8-493f-a86d-ed09be6f5f73
+                  title: labore
+                  image: null
+                  contact:
+                    phone: '7864736348878'
+                    facebook_link: 'http://www.kuhlman.net/cupiditate-dolores-molestiae-porro-consequuntur-adipisci-officia.html'
+                    messenger_link: null
+                    email_link: kara.lehner@gmail.com
+        '204':
+          description: No Content !
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /getStationDetail:
+    get:
+      tags:
+        - Station
+      summary: Get Station Detail
+      operationId: getStationDetail
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              data:
+                id: 1ccd1fa5-52cc-4c47-9aa2-c598afe7b0da
+                title: ipsa
+                description: Quia amet modi illo molestiae.
+                email: huels.idell@gmail.com
+                phone: '6997585977406'
+                facebook_link: 'http://stamm.biz/dolores-qui-eveniet-est-autem-sunt-nemo.html'
+                messenger_link: null
+                programmes:
+                  - id: 51ac728b-15fa-4ff9-8531-ed93ff139811
+                    title: Test 101010
+                    duration: 155000
+                    created_at: 'February 24 2020, 8:26 pm'
+                    image: null
+                    audio: null
+                    description: Test
+                    station_title: ipsa
+                  - id: 642f7671-86ee-476d-b266-4114562f94f8
+                    title: GGGETETETE
+                    duration: 10000
+                    created_at: 12 hours ago
+                    image: null
+                    audio: null
+                    description: Hello
+                    station_title: ipsa
+                  - id: a53e9290-e560-4da3-9f9e-a403b784966d
+                    title: Aspernatur doloribus laboriosam dolore totam.
+                    duration: 3084000
+                    created_at: 'February 24 2020, 8:26 pm'
+                    image: null
+                    audio: null
+                    description: ''
+                    station_title: ipsa
+                image: null
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /loginVolunteer:
+    post:
+      tags:
+        - Volunteer
+      summary: Volunteer Login
+      operationId: login
+      parameters:
+        - name: phone
+          in: query
+          required: true
+          type: string
+        - name: password
+          in: query
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              data:
+                id: 2490462d-cc46-47d2-9be7-4d9fad82125d
+                name: Thureiu Loki
+                phone: 0972581032
+                address: ''
+                image: null
+                station_title: Messenger Link
+                created_at: 'January 16 2020, 2:19 pm'
+                api-token: bjFwd2xSREFUcjZzOXdidUNXb2NlbkRXVmFXeEl0NlB5YVJ0RlQzMWlORXhsQkJaQlNZckM5UTc4WlpL5e543405933d1
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /logoutVolunteer:
+    post:
+      tags:
+        - Volunteer
+      summary: Volunteer logout
+      operationId: logout
+      parameters:
+        - name: api-token
+          in: header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              status: 200
+              message: Volunteer Logged Out!
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /updateVolunteer:
+    post:
+      tags:
+        - Volunteer
+      summary: Volunteer Profile Update
+      operationId: update
+      consumes:
+         - multipart/form-data
+      parameters:
+        - name: api-token
+          in: header
+          required: true
+          type: string
+        - name: name
+          in: query
+          required: true
+          type: string
+        - name: address
+          in: query
+          required: false
+          type: string
+        - name: image
+          in: formData
+          description: 'Volunteer Photo Upload ( max : 2MB )'
+          required: false
+          type: file
+        - name: image_status
+          in: query
+          description: 1 for new upload & 0 for old image
+          required: true
+          type: string
+          default: 0
+      responses:
+        '200':
+          description: Successful message !
+          examples:
+            application/json:
+              data:
+                id: 2490462d-cc46-47d2-9be7-4d9fad82125d
+                name: Thureiu Loki
+                phone: 0972581032
+                address: ''
+                image: null
+                station_title: Messenger Link
+                created_at: 'January 16 2020, 2:19 pm'
+                api-token: bjFwd2xSREFUcjZzOXdidUNXb2NlbkRXVmFXeEl0NlB5YVJ0RlQzMWlORXhsQkJaQlNZckM5UTc4WlpL5e543405933d1
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /postDocumentFile:
+    post:
+      tags:
+        - Document
+      summary: Document File Upload
+      operationId: postDocumentFile
+      consumes:
+        - multipart/form-data
+      parameters:
+        - name: api-token
+          in: header
+          required: true
+          type: string
+        - name: title
+          in: formData
+          required: true
+          type: string
+        - name: note
+          in: formData
+          required: false
+          type: string
+        - name: file
+          in: formData
+          description: 'Document Recorded file Upload ( max : 2GB )'
+          required: true
+          type: file
+      responses:
+        '200':
+          description: Successful operation !
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+  /getAllDocuments:
+    get:
+      tags:
+        - Document
+      summary: Get Document Records
+      operationId: getAllDocuments
+      parameters:
+        - name: api-token
+          in: header
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful operation !
+          examples:
+            application/json:
+              data:
+                - id: 2384c529-f0c4-445e-9f51-f5997b78e2e4
+                  title: Est earum eveniet ullam minima.
+                  created_at: 'December 6 2019, 4:28 am'
+                  file: null
+                  note: Enim sunt est nemo quis voluptas et.
+                  station_title: ut
+                  is_active: true
+        '204':
+          description: No Content !
+        '400':
+          description: Invalid request !
+          examples:
+            application/json:
+              status: 400
+              message: Custom Error Message!
+        '500':
+          description: Internal Server Error !
+          examples:
+            application/json:
+              status: 500
+              message: Something wrong!
+definitions: {}

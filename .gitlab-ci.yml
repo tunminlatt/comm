@@ -1,0 +1,24 @@
+image: docker:latest
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+before_script:
+  -  docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+  
+variables:
+  SHA: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHA"
+  LATEST: "$CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest"
+  DOCKER_TLS_CERTDIR: ""
+
+build:
+  when: manual
+  stage: build
+  script:
+    - docker build --pull -t $SHA -f Dockerfile .
+    - docker push $SHA
+    - docker tag $SHA $LATEST
+    - docker push $LATEST

@@ -1,0 +1,26 @@
+#git
+.git
+.gitignore
+.gitattributes
+
+#gitlab ci
+.gitlab
+.gitlab-ci.yml
+
+#Docker
+Dockerfile
+Dockerfile.base
+.dockerignore
+
+#Node
+node_modules
+npm-debug.log
+
+#Laravel
+env.example
+phpunit.xml
+tests
+
+#Misc
+*.md
+.editorconfig
